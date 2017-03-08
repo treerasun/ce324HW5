@@ -9,7 +9,7 @@ Repository for HW-5 in CE-324 class at School of Engineering, Bangkok University
 
 3. Clone your forked GitHub repository to your computer so that you can edit the files locally on your own machine.
 
-4. Create HTML file that open javascript file in git repository, names as "robot_arm_demo.js". Try to open such HTML file and observer whether you can see the 3D robot arm model correctly.
+4. Create HTML file that opens javascript file names as "robot_arm_demo.js" in git repository. Try to open such HTML file and observe whether you can see the 3D robot arm model correctly.
 
 5. Edit "robot_arm_demo.js" file as follow.
   - Add one more part in to robot arm model. The shape of that part should be different from other student's group.
