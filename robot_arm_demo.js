@@ -66,34 +66,29 @@ function fillScene() {
 	arm.add( forearm );
 
 	rectangle = new THREE.Object3D();
-	var Length = 80;
-	createRectangle( rectangle,Length, robotuptMaterial );
-	
-	rectangle.position.y = Length;
+	createRectangle( rectangle, robotuptMaterial );
+	rectangle.position.y = 80;
 	forearm.add( rectangle );
-	
 	scene.add( arm );
 }
 
-function createRectangle( part, length, material )
+function createRectangle( part, material )
 {
+	var cylinder = new THREE.Mesh(
+		new THREE.CylinderGeometry( 17,17, 6, 32 ),material);
+		cylinder.rotation.x =  89*Math.PI/180;
+	part.add(cylinder);
 	
-	var i;
-	for ( i = 0; i < 4; i++ )
-	{
-		var box = new THREE.Mesh(
-			new THREE.CubeGeometry( 4, length, 4 ), material );
-		box.position.x = (i < 2) ? -8 : 8;
-		box.position.y = length/2;
-		box.position.z = (i%2) ? -8 : 8;
-		part.add( box );
-	}
-
-	cylinder = new THREE.Mesh(
-		new THREE.CylinderGeometry( 15, 15, 40, 32 ), material );
-	cylinder.rotation.x = 90 * Math.PI/180;
-	cylinder.position.y = length;
-	part.add( cylinder );
+	var cylinder=new THREE.Mesh(new THREE.CylinderGeometry(3,3,100,30),material);
+	cylinder.rotation.x =  Math.PI/180;
+	cylinder.position.y = 50;
+	part.add(cylinder);
+	var sphere = new THREE.Mesh(
+		new THREE.SphereGeometry( 20, 32, 16 ), material );
+	// place sphere at end of arm
+	sphere.position.y = 100;
+	part.add( sphere );
+	
 }
 
 function createRobotExtender( part, length, material )
@@ -114,7 +109,7 @@ function createRobotExtender( part, length, material )
 	}
 
 	cylinder = new THREE.Mesh(
-		new THREE.CylinderGeometry( 15, 15, 40, 32 ), material );
+		new THREE.CylinderGeometry( 15, 15, 60, 32 ), material );
 	cylinder.rotation.x = 90 * Math.PI/180;
 	cylinder.position.y = length;
 	part.add( cylinder );
@@ -187,8 +182,8 @@ function render() {
 	forearm.rotation.y = effectController.fy * Math.PI/180;	// yaw
 	forearm.rotation.z = effectController.fz * Math.PI/180;	// roll
 
-	rectangle.rotation.y = effectController.ay * Math.PI/180;	// yaw
-	rectangle.rotation.z = effectController.az * Math.PI/180;;	// roll
+	rectangle.rotation.z = effectController.az * Math.PI/180;	// yaw
+	rectangle.position.z = effectController.apz;	// translate
 
 	renderer.render(scene, camera);
 }
@@ -209,8 +204,8 @@ function setupGui() {
 		fy: 10.0,
 		fz: 60.0,
 
-		ay: 30.0,
-		az: 2.0
+		az: 30.0,
+		apz: 12.0
 	};
 
 	var gui = new dat.GUI();
@@ -225,8 +220,8 @@ function setupGui() {
 	h.add(effectController, "uz", -45.0, 45.0, 0.025).name("Upper arm z");
 	h.add(effectController, "fy", -180.0, 180.0, 0.025).name("Forearm y");
 	h.add(effectController, "fz", -120.0, 120.0, 0.025).name("Forearm z");
-	h.add(effectController, "ay", -45.0, 100.0, 0.025).name("arm y");
-	h.add(effectController, "az", 2.0, 120.0, 0.025).name("arm z");
+	h.add(effectController, "az", -45.0, 45.0, 0.025).name("arm z");
+	h.add(effectController, "apz", 14.0, 25.0, 0.025).name("armp z");
 }
 
 function takeScreenshot() {
