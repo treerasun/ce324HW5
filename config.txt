@@ -1,0 +1,5 @@
+ Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
+            config.AppSettings.Settings.Remove(type);
+            config.AppSettings.Settings.Add(type, time);
+            ConfigurationManager.RefreshSection("appSettings");
+            config.Save(ConfigurationSaveMode.Minimal);
